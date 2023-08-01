@@ -28,10 +28,7 @@ class BaseItem: Item {
     }
 
     fileprivate func degrade() {
-        quality -= 1
-        if sellIn < 0 {
-            quality -= 1
-        }
+        quality -= sellIn < 0 ? 2 : 1
     }
 
     fileprivate func saturate() {
@@ -43,28 +40,18 @@ class BaseItem: Item {
 
 class Brie: BaseItem {
     override func degrade() {
-        quality += 1
-        if sellIn < 0 {
-            quality += 1
-        }
+        quality += sellIn < 0 ? 2 : 1
     }
 }
 
 
 class Pass: BaseItem {
     override func degrade() {
-        quality += 1
-
-        if sellIn < 10 {
-            quality += 1
-        }
-
-        if sellIn < 5 {
-            quality += 1
-        }
-
-        if sellIn < 0 {
-            quality = 0
+        switch sellIn {
+        case _ where sellIn < 0: quality = 0
+        case _ where sellIn < 5: quality += 3
+        case _ where sellIn < 10: quality += 2
+        default: quality += 1
         }
     }
 }
