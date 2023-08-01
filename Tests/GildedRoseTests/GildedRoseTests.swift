@@ -24,7 +24,7 @@ final class GildedRoseTests: XCTestCase {
         for i in 0 ..< days {
             output += "-------- day \(i) --------\n"
             output += "name, sellIn, quality"
-            for item in items {
+            for item in app.items {
                 output += "\(item)\n"
             }
             output += "\n"

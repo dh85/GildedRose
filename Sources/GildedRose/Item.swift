@@ -30,9 +30,17 @@ class Item {
         self.saturation = saturation
     }
 
-    func update() {
-        sellIn -= aging()
-        quality = saturation(quality - degradation(sellIn, quality))
+    func updated() -> Item {
+        let sellIn = sellIn - aging()
+        let quality = saturation(quality - degradation(sellIn, quality))
+        return Item(
+            name: name,
+            sellIn: sellIn,
+            quality: quality,
+            aging: aging,
+            degradation: degradation,
+            saturation: saturation
+        )
     }
 }
 

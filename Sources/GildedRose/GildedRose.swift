@@ -6,8 +6,6 @@ class GildedRose {
     }
 
     func updateQuality() {
-        for item in items {
-            item.update()
-        }
+        items = items.map { $0.updated() }
     }
 }
