@@ -21,12 +21,10 @@ final class GildedRoseTests: XCTestCase {
         let days = 10
 
         var output = ""
-        for i in 0 ..< days {
+        for (i, _) in (1...days).enumerated() {
             output += "-------- day \(i) --------\n"
             output += "name, sellIn, quality"
-            for item in app.items {
-                output += "\(item)\n"
-            }
+            app.items.forEach { output += "\($0)\n" }
             output += "\n"
             app = app.updated()
         }
