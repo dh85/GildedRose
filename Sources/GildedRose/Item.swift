@@ -18,47 +18,47 @@ extension Item: CustomStringConvertible {
 
 class BaseItem: Item {
     func update() {
-        age()
-        degrade()
-        saturate()
+        sellIn -= aging()
+        quality = saturation(quality: quality - degradation(sellIn: sellIn, quality: quality))
     }
 
-    fileprivate func age() {
-        sellIn -= 1
+    fileprivate func aging() -> Int { 1 }
+
+    fileprivate func degradation(sellIn: Int, quality: Int) -> Int {
+        sellIn < 0 ? 2 : 1
     }
 
-    fileprivate func degrade() {
-        quality -= sellIn < 0 ? 2 : 1
-    }
-
-    fileprivate func saturate() {
-        if quality < 0 { quality = 0 }
-        if quality > 50 { quality = 50 }
+    fileprivate func saturation(quality: Int) -> Int {
+        switch quality {
+        case _ where quality < 0: return 0
+        case _ where quality > 50: return 50
+        default: return quality
+        }
     }
 }
 
 
 class Brie: BaseItem {
-    override func degrade() {
-        quality += sellIn < 0 ? 2 : 1
+    override func degradation(sellIn: Int, quality: Int) -> Int {
+        sellIn < 0 ? -2 : -1
     }
 }
 
 
 class Pass: BaseItem {
-    override func degrade() {
+    override func degradation(sellIn: Int, quality: Int) -> Int {
         switch sellIn {
-        case _ where sellIn < 0: quality = 0
-        case _ where sellIn < 5: quality += 3
-        case _ where sellIn < 10: quality += 2
-        default: quality += 1
+        case _ where sellIn < 0: return quality
+        case _ where sellIn < 5: return -3
+        case _ where sellIn < 10: return -2
+        default: return -1
         }
     }
 }
 
 
 class Sulfuras: BaseItem {
-    override func degrade() {}
-    override func age() {}
-    override func saturate() {}
+    override func aging() -> Int { 0 }
+    override func degradation(sellIn: Int, quality: Int) -> Int { 0 }
+    override func saturation(quality: Int) -> Int { quality }
 }
