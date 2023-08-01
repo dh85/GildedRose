@@ -16,7 +16,7 @@ final class GildedRoseTests: XCTestCase {
             Item(name: "Conjured Mana Cake", sellIn: 3, quality: 6),
         ]
 
-        let app = GildedRose(items: items)
+        var app = GildedRose(items: items)
 
         let days = 10
 
@@ -28,7 +28,7 @@ final class GildedRoseTests: XCTestCase {
                 output += "\(item)\n"
             }
             output += "\n"
-            app.updateQuality()
+            app = app.updated()
         }
 
         XCTAssertEqual(expected, output)

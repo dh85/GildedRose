@@ -1,11 +1,7 @@
-class GildedRose {
-    var items: [Item]
+struct GildedRose {
+    let items: [Item]
 
-    init(items: [Item]) {
-        self.items = items
-    }
-
-    func updateQuality() {
-        items = items.map { $0.updated() }
+    func updated() -> GildedRose {
+        GildedRose(items: items.map { $0.updated() })
     }
 }
