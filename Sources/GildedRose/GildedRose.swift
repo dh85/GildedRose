@@ -7,11 +7,7 @@ class GildedRose {
 
     func updateQuality() {
         for item in items {
-            guard let item = item as? BaseItem else {
-                fatalError("Cannot call Item")
-            }
             item.update()
-
         }
     }
 }

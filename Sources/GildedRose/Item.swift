@@ -8,15 +8,7 @@ class Item {
         self.sellIn = sellIn
         self.quality = quality
     }
-}
 
-extension Item: CustomStringConvertible {
-    var description: String {
-        "\(name), \(sellIn), \(quality)"
-    }
-}
-
-class BaseItem: Item {
     func update() {
         sellIn -= aging()
         quality = saturation(quality: quality - degradation(sellIn: sellIn, quality: quality))
@@ -37,15 +29,21 @@ class BaseItem: Item {
     }
 }
 
+extension Item: CustomStringConvertible {
+    var description: String {
+        "\(name), \(sellIn), \(quality)"
+    }
+}
 
-class Brie: BaseItem {
+
+class Brie: Item {
     override func degradation(sellIn: Int, quality: Int) -> Int {
         sellIn < 0 ? -2 : -1
     }
 }
 
 
-class Pass: BaseItem {
+class Pass: Item {
     override func degradation(sellIn: Int, quality: Int) -> Int {
         switch sellIn {
         case _ where sellIn < 0: return quality
@@ -57,7 +55,7 @@ class Pass: BaseItem {
 }
 
 
-class Sulfuras: BaseItem {
+class Sulfuras: Item {
     override func aging() -> Int { 0 }
     override func degradation(sellIn: Int, quality: Int) -> Int { 0 }
     override func saturation(quality: Int) -> Int { quality }
