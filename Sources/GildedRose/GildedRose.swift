@@ -1,11 +1,11 @@
-public class GildedRose {
+class GildedRose {
     var items: [Item]
 
-    public init(items: [Item]) {
+    init(items: [Item]) {
         self.items = items
     }
 
-    public func updateQuality() {
+    func updateQuality() {
         for i in 0 ..< items.count {
             if items[i].name != "Aged Brie", items[i].name != "Backstage passes to a TAFKAL80ETC concert" {
                 if items[i].quality > 0 {
