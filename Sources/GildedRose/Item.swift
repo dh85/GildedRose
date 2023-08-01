@@ -19,7 +19,7 @@ extension Item: CustomStringConvertible {
 class BaseItem: Item {
     func update() {
         foo1()
-        foo2()
+        age()
         foo3()
     }
 
@@ -29,7 +29,7 @@ class BaseItem: Item {
         }
     }
 
-    fileprivate func foo2() {
+    fileprivate func age() {
         sellIn -= 1
     }
 
@@ -83,6 +83,6 @@ class Pass: BaseItem {
 
 class Sulfuras: BaseItem {
     override func foo1() {}
-    override func foo2() {}
+    override func age() {}
     override func foo3() {}
 }
