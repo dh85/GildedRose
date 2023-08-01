@@ -18,31 +18,7 @@ extension Item: CustomStringConvertible {
 
 class BaseItem: Item {
     func update() {
-        if name != "Aged Brie", name != "Backstage passes to a TAFKAL80ETC concert" {
-            if quality > 0 {
-                if name != "Sulfuras, Hand of Ragnaros" {
-                    quality = quality - 1
-                }
-            }
-        } else {
-            if quality < 50 {
-                quality = quality + 1
-
-                if name == "Backstage passes to a TAFKAL80ETC concert" {
-                    if sellIn < 11 {
-                        if quality < 50 {
-                            quality = quality + 1
-                        }
-                    }
-
-                    if sellIn < 6 {
-                        if quality < 50 {
-                            quality = quality + 1
-                        }
-                    }
-                }
-            }
-        }
+        foo1()
 
         if name != "Sulfuras, Hand of Ragnaros" {
             sellIn = sellIn - 1
@@ -66,4 +42,41 @@ class BaseItem: Item {
             }
         }
     }
+
+    fileprivate func foo1() {
+        if quality > 0 {
+            quality -= 1
+        }
+    }
+}
+
+
+class Brie: BaseItem {
+    override func foo1() {
+        if quality < 50 {
+            quality += 1
+        }
+    }
+}
+
+
+class Pass: BaseItem {
+    override func foo1() {
+        if quality < 50 {
+            quality += 1
+
+            if sellIn < 11 && quality < 50 {
+                quality += 1
+            }
+
+            if sellIn < 6 && quality < 50 {
+                quality += 1
+            }
+        }
+    }
+}
+
+
+class Sulfuras: BaseItem {
+    override func foo1() {}
 }
