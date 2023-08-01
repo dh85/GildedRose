@@ -19,10 +19,7 @@ extension Item: CustomStringConvertible {
 class BaseItem: Item {
     func update() {
         foo1()
-
-        if name != "Sulfuras, Hand of Ragnaros" {
-            sellIn = sellIn - 1
-        }
+        foo2()
 
         if sellIn < 0 {
             if name != "Aged Brie" {
@@ -47,6 +44,10 @@ class BaseItem: Item {
         if quality > 0 {
             quality -= 1
         }
+    }
+
+    fileprivate func foo2() {
+        sellIn -= 1
     }
 }
 
@@ -79,4 +80,5 @@ class Pass: BaseItem {
 
 class Sulfuras: BaseItem {
     override func foo1() {}
+    override func foo2() {}
 }
