@@ -12,7 +12,6 @@ final class GildedRoseTests: XCTestCase {
             Pass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 20),
             Pass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 49),
             Pass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 49),
-            // this conjured item does not work properly yet
             Conjured(name: "Conjured Mana Cake", sellIn: 3, quality: 6),
         ]
 
