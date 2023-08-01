@@ -12,7 +12,7 @@ class Item {
 
 extension Item: CustomStringConvertible {
     var description: String {
-        name + ", " + String(sellIn) + ", " + String(quality)
+        "\(name), \(sellIn), \(quality)"
     }
 }
 
