@@ -20,24 +20,7 @@ class BaseItem: Item {
     func update() {
         foo1()
         foo2()
-
-        if sellIn < 0 {
-            if name != "Aged Brie" {
-                if name != "Backstage passes to a TAFKAL80ETC concert" {
-                    if quality > 0 {
-                        if name != "Sulfuras, Hand of Ragnaros" {
-                            quality = quality - 1
-                        }
-                    }
-                } else {
-                    quality = quality - quality
-                }
-            } else {
-                if quality < 50 {
-                    quality = quality + 1
-                }
-            }
-        }
+        foo3()
     }
 
     fileprivate func foo1() {
@@ -49,6 +32,12 @@ class BaseItem: Item {
     fileprivate func foo2() {
         sellIn -= 1
     }
+
+    fileprivate func foo3() {
+        if sellIn < 0 && quality > 0 {
+            quality -= 1
+        }
+    }
 }
 
 
@@ -56,6 +45,14 @@ class Brie: BaseItem {
     override func foo1() {
         if quality < 50 {
             quality += 1
+        }
+    }
+
+    override func foo3() {
+        if sellIn < 0 {
+            if quality < 50 {
+                quality += 1
+            }
         }
     }
 }
@@ -75,10 +72,17 @@ class Pass: BaseItem {
             }
         }
     }
+
+    override func foo3() {
+        if sellIn < 0 {
+            quality = 0
+        }
+    }
 }
 
 
 class Sulfuras: BaseItem {
     override func foo1() {}
     override func foo2() {}
+    override func foo3() {}
 }
