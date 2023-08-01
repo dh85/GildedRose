@@ -55,3 +55,9 @@ func Pass(name: String, sellIn: Int, quality: Int) -> Item {
 func Sulfuras(name: String, sellIn: Int, quality: Int) -> Item {
     Item(name: name, sellIn: sellIn, quality: quality, aging: { 0 }, degradation: { _, _ in 0 }, saturation: { $0 })
 }
+
+func Conjured(name: String, sellIn: Int, quality: Int) -> Item {
+    Item(name: name, sellIn: sellIn, quality: quality, degradation: { sellIn, _ in
+        sellIn < 0 ? 4 : 2
+    })
+}
