@@ -4,15 +4,15 @@ import XCTest
 final class GildedRoseTests: XCTestCase {
     func test() {
         let items = [
-            Item(name: "+5 Dexterity Vest", sellIn: 10, quality: 20),
-            Brie(name: "Aged Brie", sellIn: 2, quality: 0),
-            Item(name: "Elixir of the Mongoose", sellIn: 5, quality: 7),
-            Sulfuras(name: "Sulfuras, Hand of Ragnaros", sellIn: 0, quality: 80),
-            Sulfuras(name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80),
-            Pass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 20),
-            Pass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 49),
-            Pass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 49),
-            Conjured(name: "Conjured Mana Cake", sellIn: 3, quality: 6),
+            makeItem(name: "+5 Dexterity Vest", sellIn: 10, quality: 20),
+            makeBrie(name: "Aged Brie", sellIn: 2, quality: 0),
+            makeItem(name: "Elixir of the Mongoose", sellIn: 5, quality: 7),
+            makeSulfuras(name: "Sulfuras, Hand of Ragnaros", sellIn: 0, quality: 80),
+            makeSulfuras(name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80),
+            makePass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 20),
+            makePass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 49),
+            makePass(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 49),
+            makeConjured(name: "Conjured Mana Cake", sellIn: 3, quality: 6),
         ]
 
         var app = GildedRose(items: items)
