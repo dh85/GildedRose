@@ -2,30 +2,37 @@ class Item {
     let name: String
     var sellIn: Int
     var quality: Int
+    private let aging: () -> Int
+    private let degradation: (Int, Int) -> Int
+    private let saturation: (Int) -> Int
 
-    init(name: String, sellIn: Int, quality: Int) {
+    init(
+        name: String,
+        sellIn: Int,
+        quality: Int,
+        aging: @escaping () -> Int = { 1 },
+        degradation: @escaping (Int, Int) -> Int = { sellIn, _ in
+            sellIn < 0 ? 2 : 1
+        },
+        saturation: @escaping (Int) -> Int = { quality in
+            switch quality {
+            case _ where quality < 0: return 0
+            case _ where quality > 50: return 50
+            default: return quality
+            }
+        }
+    ) {
         self.name = name
         self.sellIn = sellIn
         self.quality = quality
+        self.aging = aging
+        self.degradation = degradation
+        self.saturation = saturation
     }
 
     func update() {
         sellIn -= aging()
-        quality = saturation(quality: quality - degradation(sellIn: sellIn, quality: quality))
-    }
-
-    fileprivate func aging() -> Int { 1 }
-
-    fileprivate func degradation(sellIn: Int, quality: Int) -> Int {
-        sellIn < 0 ? 2 : 1
-    }
-
-    fileprivate func saturation(quality: Int) -> Int {
-        switch quality {
-        case _ where quality < 0: return 0
-        case _ where quality > 50: return 50
-        default: return quality
-        }
+        quality = saturation(quality - degradation(sellIn, quality))
     }
 }
 
@@ -36,27 +43,23 @@ extension Item: CustomStringConvertible {
 }
 
 
-class Brie: Item {
-    override func degradation(sellIn: Int, quality: Int) -> Int {
+func Brie(name: String, sellIn: Int, quality: Int) -> Item {
+    Item(name: name, sellIn: sellIn, quality: quality, degradation: { sellIn, _ in
         sellIn < 0 ? -2 : -1
-    }
+    })
 }
 
-
-class Pass: Item {
-    override func degradation(sellIn: Int, quality: Int) -> Int {
+func Pass(name: String, sellIn: Int, quality: Int) -> Item {
+    Item(name: name, sellIn: sellIn, quality: quality, degradation: { sellIn, quality in
         switch sellIn {
         case _ where sellIn < 0: return quality
         case _ where sellIn < 5: return -3
         case _ where sellIn < 10: return -2
         default: return -1
         }
-    }
+    })
 }
 
-
-class Sulfuras: Item {
-    override func aging() -> Int { 0 }
-    override func degradation(sellIn: Int, quality: Int) -> Int { 0 }
-    override func saturation(quality: Int) -> Int { quality }
+func Sulfuras(name: String, sellIn: Int, quality: Int) -> Item {
+    Item(name: name, sellIn: sellIn, quality: quality, aging: { 0 }, degradation: { _, _ in 0 }, saturation: { $0 })
 }
