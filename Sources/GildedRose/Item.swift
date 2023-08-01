@@ -1,35 +1,19 @@
-class Item {
+struct Item {
     let name: String
-    var sellIn: Int
-    var quality: Int
-    private let aging: () -> Int
-    private let degradation: (Int, Int) -> Int
-    private let saturation: (Int) -> Int
-
-    init(
-        name: String,
-        sellIn: Int,
-        quality: Int,
-        aging: @escaping () -> Int = { 1 },
-        degradation: @escaping (Int, Int) -> Int = { sellIn, _ in
-            sellIn < 0 ? 2 : 1
-        },
-        saturation: @escaping (Int) -> Int = { quality in
-            switch quality {
-            case _ where quality < 0: return 0
-            case _ where quality > 50: return 50
-            default: return quality
-            }
-        }
-    ) {
-        self.name = name
-        self.sellIn = sellIn
-        self.quality = quality
-        self.aging = aging
-        self.degradation = degradation
-        self.saturation = saturation
+    let sellIn: Int
+    let quality: Int
+    var aging: () -> Int = { 1 }
+    var degradation: (Int, Int) -> Int = { sellIn, _ in
+        sellIn < 0 ? 2 : 1
     }
-
+    var saturation: (Int) -> Int = { quality in
+        switch quality {
+        case _ where quality < 0: return 0
+        case _ where quality > 50: return 50
+        default: return quality
+        }
+    }
+    
     func updated() -> Item {
         let sellIn = sellIn - aging()
         let quality = saturation(quality - degradation(sellIn, quality))
