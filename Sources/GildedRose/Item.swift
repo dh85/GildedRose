@@ -20,29 +20,31 @@ class BaseItem: Item {
     func update() {
         age()
         degrade()
-    }
-
-    fileprivate func degrade() {
-        if quality > 0 {
-            quality -= 1
-        }
-        if sellIn < 0 && quality > 0 {
-            quality -= 1
-        }
+        saturate()
     }
 
     fileprivate func age() {
         sellIn -= 1
+    }
+
+    fileprivate func degrade() {
+        quality -= 1
+        if sellIn < 0 {
+            quality -= 1
+        }
+    }
+
+    fileprivate func saturate() {
+        if quality < 0 { quality = 0 }
+        if quality > 50 { quality = 50 }
     }
 }
 
 
 class Brie: BaseItem {
     override func degrade() {
-        if quality < 50 {
-            quality += 1
-        }
-        if sellIn < 0 && quality < 50 {
+        quality += 1
+        if sellIn < 0 {
             quality += 1
         }
     }
@@ -51,17 +53,16 @@ class Brie: BaseItem {
 
 class Pass: BaseItem {
     override func degrade() {
-        if quality < 50 {
+        quality += 1
+
+        if sellIn < 10 {
             quality += 1
-
-            if sellIn < 10 && quality < 50 {
-                quality += 1
-            }
-
-            if sellIn < 5 && quality < 50 {
-                quality += 1
-            }
         }
+
+        if sellIn < 5 {
+            quality += 1
+        }
+
         if sellIn < 0 {
             quality = 0
         }
@@ -72,4 +73,5 @@ class Pass: BaseItem {
 class Sulfuras: BaseItem {
     override func degrade() {}
     override func age() {}
+    override func saturate() {}
 }
