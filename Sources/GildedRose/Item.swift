@@ -18,13 +18,15 @@ extension Item: CustomStringConvertible {
 
 class BaseItem: Item {
     func update() {
-        foo1()
         age()
-        foo3()
+        degrade()
     }
 
-    fileprivate func foo1() {
+    fileprivate func degrade() {
         if quality > 0 {
+            quality -= 1
+        }
+        if sellIn < 0 && quality > 0 {
             quality -= 1
         }
     }
@@ -32,48 +34,34 @@ class BaseItem: Item {
     fileprivate func age() {
         sellIn -= 1
     }
-
-    fileprivate func foo3() {
-        if sellIn < 0 && quality > 0 {
-            quality -= 1
-        }
-    }
 }
 
 
 class Brie: BaseItem {
-    override func foo1() {
+    override func degrade() {
         if quality < 50 {
             quality += 1
         }
-    }
-
-    override func foo3() {
-        if sellIn < 0 {
-            if quality < 50 {
-                quality += 1
-            }
+        if sellIn < 0 && quality < 50 {
+            quality += 1
         }
     }
 }
 
 
 class Pass: BaseItem {
-    override func foo1() {
+    override func degrade() {
         if quality < 50 {
             quality += 1
 
-            if sellIn < 11 && quality < 50 {
+            if sellIn < 10 && quality < 50 {
                 quality += 1
             }
 
-            if sellIn < 6 && quality < 50 {
+            if sellIn < 5 && quality < 50 {
                 quality += 1
             }
         }
-    }
-
-    override func foo3() {
         if sellIn < 0 {
             quality = 0
         }
@@ -82,7 +70,6 @@ class Pass: BaseItem {
 
 
 class Sulfuras: BaseItem {
-    override func foo1() {}
+    override func degrade() {}
     override func age() {}
-    override func foo3() {}
 }
